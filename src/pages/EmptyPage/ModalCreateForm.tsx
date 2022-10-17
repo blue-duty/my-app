@@ -4,157 +4,142 @@ import {
   ProFormDateRangePicker,
   ProFormSelect,
   ProFormText,
-  ProFormRadio,ProFormDigit,ProFormTextArea,ProFormSwitch
+  ProFormRadio,
+  ProFormDigit,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
-import {
-  Col,
-  Collapse,
-  Form,
-  Input,
-  Row,
-  Select,
-  Switch,
-  Tooltip,Typography
-} from "antd";
-import {ExclamationCircleOutlined} from "@ant-design/icons";
-import { getTags} from '@/services/ant-design-pro/api';
-import { useState,useEffect } from 'react';
-
-const {Text} = Typography;
-const {Panel} = Collapse;
+import { Col, Row } from 'antd';
+import { getTags } from '@/services/ant-design-pro/api';
 
 type CreateFormProps = {
   visible: boolean;
   onDone: () => void;
-  model:API.RuleListItem | undefined;
+  model: API.RuleListItem | undefined;
 };
 
 const ModalCreateForm: React.FC<CreateFormProps> = (props) => {
-    const { visible, model, onDone } = props;
+  const { visible, model, onDone } = props;
 
-    // if (model.accountType === undefined) {
-    //     model.accountType = 'rdp';
-    // }
-    // if(model['ssh-mode'] === undefined){
-    //     model['ssh-mode'] = 'native'
-    // }
-    // let [accountType, setAccountType] = useState(model.accountType);
-    // let [protocol, setProtocol] = useState(model.protocol);
-    // let [sshMode, setSshMode] = useState(model['ssh-mode']);
+  // if (model.accountType === undefined) {
+  //     model.accountType = 'rdp';
+  // }
+  // if(model['ssh-mode'] === undefined){
+  //     model['ssh-mode'] = 'native'
+  // }
+  // let [accountType, setAccountType] = useState(model.accountType);
+  // let [protocol, setProtocol] = useState(model.protocol);
+  // let [sshMode, setSshMode] = useState(model['ssh-mode']);
 
-    // let initAccountTypes = []
-    // if (model.protocol) {
-    //     initAccountTypes = protocolMapping[model.protocol];
-    // }
-    // let [accountTypes, setAccountTypes] = useState(initAccountTypes);
-    // let [useSSL, setUseSSL] = useState(model['use-ssl']);
+  // let initAccountTypes = []
+  // if (model.protocol) {
+  //     initAccountTypes = protocolMapping[model.protocol];
+  // }
+  // let [accountTypes, setAccountTypes] = useState(initAccountTypes);
+  // let [useSSL, setUseSSL] = useState(model['use-ssl']);
 
-    // for (let key in model) {
-    //     if (model.hasOwnProperty(key)) {
-    //         if (model[key] === '-') {
-    //             model[key] = '';
-    //         }
-    //     }
-    // }
+  // for (let key in model) {
+  //     if (model.hasOwnProperty(key)) {
+  //         if (model[key] === '-') {
+  //             model[key] = '';
+  //         }
+  //     }
+  // }
 
-    // let [enableDrive, setEnableDrive] = useState(model['enable-drive']);
-    // let [storages, setStorages] = useState([]);
-    // useEffect(() => {
-    //     const getStorages = async () => {
-    //         let result = request('/sss/storages/shares');
-    //         return setStorages(result['data']);
-             
-    //     }
-    //     getStorages();
-    // }, []);
+  // let [enableDrive, setEnableDrive] = useState(model['enable-drive']);
+  // let [storages, setStorages] = useState([]);
+  // useEffect(() => {
+  //     const getStorages = async () => {
+  //         let result = request('/sss/storages/shares');
+  //         return setStorages(result['data']);
 
-    
+  //     }
+  //     getStorages();
+  // }, []);
 
   return (
     <ModalForm
-        title="新建"
-        visible={visible}
-        initialValues={model}
-        modalProps={{
-          onCancel: () => onDone()
-        }}
-        
-      >
-        <Row>
-            <Col span={13}>
-                <ProFormText hidden={true} name="id" />
+      title="新建"
+      visible={visible}
+      initialValues={model}
+      modalProps={{
+        onCancel: () => onDone(),
+      }}
+    >
+      <Row>
+        <Col span={13}>
+          <ProFormText hidden={true} name="id" />
 
-                <ProFormText
-                  name="name"
-                  label="主机名称"
-                  rules={[{ required: true, message: '请输入主机名称' }]}
-                  placeholder="请输入"
-                />
+          <ProFormText
+            name="name"
+            label="主机名称"
+            rules={[{ required: true, message: '请输入主机名称' }]}
+            placeholder="请输入"
+          />
 
-                <ProFormText
-                  name="ip"
-                  label="主机IP"
-                  rules={[{ required: true, message: '请输入主机的IP地址' }]}
-                  placeholder="请输入"
-                />
+          <ProFormText
+            name="ip"
+            label="主机IP"
+            rules={[{ required: true, message: '请输入主机的IP地址' }]}
+            placeholder="请输入"
+          />
 
-                <ProFormRadio.Group
-                  name="protocol"
-                  label="接入协议"
-                  rules={[{required: true, message: '请选择接入协议'}]}
-                  options={[
-                    {
-                      label: 'RDP',
-                      value: 'rdp',
-                    },
-                    {
-                      label: 'SSH',
-                      value: 'ssh',
-                    },
-                    {
-                      label: 'Telnet',
-                      value: 'telnet',
-                    },
-                    {
-                      label: 'VNC',
-                      value: 'vnc',
-                    },
-                  ]}
-                />
+          <ProFormRadio.Group
+            name="protocol"
+            label="接入协议"
+            rules={[{ required: true, message: '请选择接入协议' }]}
+            options={[
+              {
+                label: 'RDP',
+                value: 'rdp',
+              },
+              {
+                label: 'SSH',
+                value: 'ssh',
+              },
+              {
+                label: 'Telnet',
+                value: 'telnet',
+              },
+              {
+                label: 'VNC',
+                value: 'vnc',
+              },
+            ]}
+          />
 
-                <ProFormDigit 
-                  label="端口号" 
-                  name="port"
-                  rules={[{required: true, message: '请输入端口号'}]} 
-                  placeholder="请输入TCP端口"
-                  min={1} 
-                  max={65535} 
-                />
+          <ProFormDigit
+            label="端口号"
+            name="port"
+            rules={[{ required: true, message: '请输入端口号' }]}
+            placeholder="请输入TCP端口"
+            min={1}
+            max={65535}
+          />
 
-                <ProFormSelect
-                    name="tags"
-                    label="标签"
-                    placeholder="标签可以更加方便的检索资产"
-                    request={async () => {
-                        return getTags().then(({ data }) => {
-                          return data.map((item) => {
-                            return {
-                              label: item.name,
-                              value: item.id,
-                            };
-                          });
-                        });
-                      }}
-                />
+          <ProFormSelect
+            name="tags"
+            label="标签"
+            placeholder="标签可以更加方便的检索资产"
+            request={async () => {
+              return getTags().then(({ data }) => {
+                return data.map((item) => {
+                  return {
+                    label: item.name,
+                    value: item.id,
+                  };
+                });
+              });
+            }}
+          />
 
-                <ProFormTextArea
-                  name="description"
-                  label="备注"
-                  placeholder="关于资产的一些信息您可以写在这里"
-                />
-            </Col>
-            <Col span={11}>
-                {/* <Collapse defaultActiveKey={['remote-app', '认证', 'storage']} ghost>
+          <ProFormTextArea
+            name="description"
+            label="备注"
+            placeholder="关于资产的一些信息您可以写在这里"
+          />
+        </Col>
+        <Col span={11}>
+          {/* <Collapse defaultActiveKey={['remote-app', '认证', 'storage']} ghost>
                     {
                         protocol === 'rdp' ?
                             <>
@@ -354,51 +339,51 @@ const ModalCreateForm: React.FC<CreateFormProps> = (props) => {
                             </> : undefined
                     }
                 </Collapse> */}
-            </Col>
-        </Row>
-        <ProForm.Group>
-          <ProFormText
-            width="md"
-            name="name"
-            label="签约客户名称"
-            tooltip="最长为 24 位"
-            placeholder="请输入名称"
-          />
-  
-          <ProFormText width="md" name="company" label="我方公司名称" placeholder="请输入名称" />
-        </ProForm.Group>
-        <ProForm.Group>
-          <ProFormText width="md" name="contract" label="合同名称" placeholder="请输入名称" />
-          <ProFormDateRangePicker name="contractTime" label="合同生效时间" />
-        </ProForm.Group>
-        <ProForm.Group>
-          <ProFormSelect
-            request={async () => [
-              {
-                value: 'chapter',
-                label: '盖章后生效',
-              },
-            ]}
-            width="xs"
-            name="useMode"
-            label="合同约定生效方式"
-          />
-          <ProFormSelect
-            width="xs"
-            options={[
-              {
-                value: 'time',
-                label: '履行完终止',
-              },
-            ]}
-            name="unusedMode"
-            label="合同约定失效效方式"
-          />
-        </ProForm.Group>
-        <ProFormText width="sm" name="id" label="主合同编号" />
-        <ProFormText name="project" disabled label="项目名称" initialValue="xxxx项目" />
-        <ProFormText width="xs" name="mangerName" disabled label="商务经理" initialValue="启途" />
-      </ModalForm>
+        </Col>
+      </Row>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="name"
+          label="签约客户名称"
+          tooltip="最长为 24 位"
+          placeholder="请输入名称"
+        />
+
+        <ProFormText width="md" name="company" label="我方公司名称" placeholder="请输入名称" />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText width="md" name="contract" label="合同名称" placeholder="请输入名称" />
+        <ProFormDateRangePicker name="contractTime" label="合同生效时间" />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormSelect
+          request={async () => [
+            {
+              value: 'chapter',
+              label: '盖章后生效',
+            },
+          ]}
+          width="xs"
+          name="useMode"
+          label="合同约定生效方式"
+        />
+        <ProFormSelect
+          width="xs"
+          options={[
+            {
+              value: 'time',
+              label: '履行完终止',
+            },
+          ]}
+          name="unusedMode"
+          label="合同约定失效效方式"
+        />
+      </ProForm.Group>
+      <ProFormText width="sm" name="id" label="主合同编号" />
+      <ProFormText name="project" disabled label="项目名称" initialValue="xxxx项目" />
+      <ProFormText width="xs" name="mangerName" disabled label="商务经理" initialValue="启途" />
+    </ModalForm>
   );
 };
 

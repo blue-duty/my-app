@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button,Drawer,Tag,Tooltip} from 'antd';
+import { Button, Drawer, Tag, Tooltip } from 'antd';
 import React, { useState, useRef } from 'react';
 import { useIntl, FormattedMessage } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
@@ -7,29 +7,25 @@ import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
-import { getList} from '@/services/ant-design-pro/api';
-import { isEmpty,PROTOCOL_COLORS} from '@/services/ant-design-pro/utils';
+import { getList } from '@/services/ant-design-pro/api';
+import { isEmpty, PROTOCOL_COLORS } from '@/services/ant-design-pro/utils';
 import ModalCreateForm from './ModalCreateForm';
 
-
-
 const TableList: React.FC = () => {
-
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
 
   const handleDone = () => {
-    setDone(false);
+    setDone(done);
     setVisible(false);
   };
 
   const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
 
-
   const [showDetail, setShowDetail] = useState<boolean>(false);
 
   const actionRef = useRef<ActionType>();
-  
+
   const [selectedRowsState, setSelectedRows] = useState<API.RuleListItem[]>([]);
 
   /**
@@ -40,12 +36,7 @@ const TableList: React.FC = () => {
 
   const columns: ProColumns<API.RuleListItem>[] = [
     {
-      title: (
-        <FormattedMessage
-          id="pages.assetTable.ruleName.name"
-          defaultMessage="Rule name"
-        />
-      ),
+      title: <FormattedMessage id="pages.assetTable.ruleName.name" defaultMessage="Rule name" />,
       dataIndex: 'name',
       // tip: 'The rule name is the unique key',
       render: (dom, entity) => {
@@ -65,36 +56,36 @@ const TableList: React.FC = () => {
       title: <FormattedMessage id="pages.assetTable.ruleName.protocol" defaultMessage="Protocol" />,
       dataIndex: 'protocol',
       render: (text, record) => {
-        const title = `${record['ip'] + ':' + record['port']}`
+        const title = `${record['ip'] + ':' + record['port']}`;
         return (
-            <Tooltip title={title}>
-                <Tag color={PROTOCOL_COLORS[text as any]}>{text}</Tag>
-            </Tooltip>
-        )
-    }
+          <Tooltip title={title}>
+            <Tag color={PROTOCOL_COLORS[text as any]}>{text}</Tag>
+          </Tooltip>
+        );
+      },
     },
     {
       title: <FormattedMessage id="pages.assetTable.ruleName.tags" defaultMessage="Tags" />,
       dataIndex: 'tags',
-      render: (tags) => {
-        if (!isEmpty(tags)) {
-            let tagDocuments = []
-            let tagArr = tags.split(',');
-            for (let i = 0; i < tagArr.length; i++) {
-                if (tags[i] === '-') {
-                    continue;
-                }
-                tagDocuments.push(<Tag key={tagArr[i]}>{tagArr[i]}</Tag>)
+      render: (_, record) => {
+        const tagDocuments: any[] = [];
+        if (!isEmpty(record.tags)) {
+          const tagArr = record.tags.split(',');
+          for (let i = 0; i < tagArr.length; i++) {
+            if (tagArr[i] === '-') {
+              continue;
             }
-            return tagDocuments;
+            tagDocuments.push(<Tag key={tagArr[i]}>{tagArr[i]}</Tag>);
+          }
         }
-    }
+        return tagDocuments;
+      },
     },
     {
       title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="Status" />,
       dataIndex: 'active',
       hideInForm: true,
-      hideInSearch:true,
+      hideInSearch: true,
       valueEnum: {
         true: {
           text: (
@@ -104,17 +95,16 @@ const TableList: React.FC = () => {
         },
         false: {
           text: (
-            <FormattedMessage
-              id="pages.searchTable.nameStatus.outline"
-              defaultMessage="Abnormal"
-            />
+            <FormattedMessage id="pages.searchTable.nameStatus.outline" defaultMessage="Abnormal" />
           ),
           status: 'Error',
         },
       },
     },
     {
-      title: <FormattedMessage id="pages.assetTable.ruleName.ownerName" defaultMessage="OwnerName" />,
+      title: (
+        <FormattedMessage id="pages.assetTable.ruleName.ownerName" defaultMessage="OwnerName" />
+      ),
       dataIndex: 'ownerName',
       valueType: 'textarea',
     },
@@ -207,11 +197,11 @@ const TableList: React.FC = () => {
           }
         >
           <Button
-            // onClick={async () => {
-            //   await handleRemove(selectedRowsState);
-            //   setSelectedRows([]);
-            //   actionRef.current?.reloadAndRest?.();
-            // }}
+          // onClick={async () => {
+          //   await handleRemove(selectedRowsState);
+          //   setSelectedRows([]);
+          //   actionRef.current?.reloadAndRest?.();
+          // }}
           >
             <FormattedMessage
               id="pages.searchTable.batchDeletion"
@@ -227,12 +217,7 @@ const TableList: React.FC = () => {
         </FooterToolbar>
       )}
 
-      <ModalCreateForm
-        visible={visible}
-        onDone={handleDone}
-        model={currentRow}
-      />
-      
+      <ModalCreateForm visible={visible} onDone={handleDone} model={currentRow} />
 
       <Drawer
         width={600}
