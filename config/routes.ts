@@ -20,17 +20,17 @@ export default [
     component: './Welcome',
   },
   {
+    name: '部门机构',
+    icon: 'smile',
+    path: '/department',
+    component: './Department',
+  },
+  {
     path: '/admin',
     name: 'admin',
     icon: 'crown',
     access: 'canAdmin',
     routes: [
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
-        component: './Welcome',
-      },
       {
         name: 'empty-page',
         icon: 'smile',
@@ -41,12 +41,6 @@ export default [
         component: './404',
       },
     ],
-  },
-  {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
   },
   {
     path: '/',

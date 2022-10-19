@@ -76,12 +76,12 @@ const TableList: React.FC = () => {
     {
       title: <FormattedMessage id="pages.assetTable.ruleName.tags" defaultMessage="Tags" />,
       dataIndex: 'tags',
-      render: (tags) => {
-        if (!isEmpty(tags)) {
+      render: (_,record) => {
+        if (!isEmpty(record.tags)) {
             let tagDocuments = []
-            let tagArr = tags.split(',');
+            let tagArr = record.tags.split(',');
             for (let i = 0; i < tagArr.length; i++) {
-                if (tags[i] === '-') {
+                if (record.tags[i] === '-') {
                     continue;
                 }
                 tagDocuments.push(<Tag key={tagArr[i]}>{tagArr[i]}</Tag>)
@@ -168,27 +168,11 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<API.RuleListItem, API.PageParams>
-        headerTitle={intl.formatMessage({
-          id: 'pages.assetTable.title',
-          defaultMessage: 'Asset list',
-        })}
+        headerTitle="用户列表"
         actionRef={actionRef}
         rowKey="key"
-        search={{
-          labelWidth: 120,
-        }}
-        toolBarRender={() => [
-          <Button
-            type="primary"
-            key="primary"
-            onClick={() => {
-              setVisible(true);
-            }}
-          >
-            <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
-          </Button>,
-        ]}
-        request={getList}
+        search={false}
+        // request={getList}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {

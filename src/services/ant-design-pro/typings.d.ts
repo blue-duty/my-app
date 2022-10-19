@@ -41,7 +41,7 @@ declare namespace API {
     protocol?: string;
     sharerCount?: number;
     sshMode?: string;
-    tags:string[];
+    tags:string;
   };
   
   type RuleList = {

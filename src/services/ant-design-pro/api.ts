@@ -8,6 +8,10 @@ export async function getTags(): Promise<{ data: API.TagsItemType[] }> {
   return request('/sss/tags');
 }
 
+export async function getStorages(): Promise<{ data: API.TagsItemType[] }> {
+  return request('/sss/storages/shares');
+}
+
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
   return request<{
