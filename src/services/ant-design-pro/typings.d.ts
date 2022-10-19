@@ -19,7 +19,7 @@ declare namespace API {
     // currentAuthority?: string;
     code?: number;
     data: string;
-    message?: string
+    message?: string;
   };
 
   type PageParams = {
@@ -27,23 +27,22 @@ declare namespace API {
     pageSize?: number;
   };
 
-
   type RuleListItem = {
     key?: number;
-    id?:string;
+    id?: string;
     active?: boolean;
     created: string;
     ip?: string;
     name?: string;
     owner?: string;
     ownerName?: string;
-    port?:number;
+    port?: number;
     protocol?: string;
     sharerCount?: number;
     sshMode?: string;
     tags:string;
   };
-  
+
   type RuleList = {
     data?: RuleListItem[];
     /** 列表的内容总数 */
@@ -55,12 +54,6 @@ declare namespace API {
     name: string;
     id: string;
   };
-
-
-
-
-
-  
 
   type FakeCaptcha = {
     code?: number;
